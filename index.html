@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Consumo</title>
+</head>
+<body>
+    <h1>Registro de Consumo Diario</h1>
+
+    <input type="number" id="inputConsumo" placeholder="Ingrese consumo">
+    <button onclick="enviarConsumo()">Guardar</button>
+
+    <h2>Historial de Consumo</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Consumo</th>
+            </tr>
+        </thead>
+        <tbody id="tablaConsumo"></tbody>
+    </table>
+
+    <script src="script.js"></script>
+</body>
+</html>
