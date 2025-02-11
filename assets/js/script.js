@@ -1,5 +1,5 @@
 // URL de la API de Google Apps Script
-const API_URL = "https://script.google.com/macros/s/AKfycbxmdvZu7kxlx1NA277uAOTX1H9bcxwUlk4tWxDgW5rpbKgRGX1j6VQDscHJP5k4ykD5/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbwGQ6EYZt4O0vCfEj9UMKgge-yVzaef1DGUzHIQLiR4_a4pZUd4b5ZEB6G9oYS09JES/exec";
 
 // Función para enviar datos a Google Sheets
 function enviarConsumo() {

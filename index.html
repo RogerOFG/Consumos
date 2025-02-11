@@ -1,27 +1,49 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Consumo</title>
 </head>
+
 <body>
-    <h1>Registro de Consumo Diario</h1>
+    <p>Sheets API Quickstart</p>
 
-    <input type="number" id="inputConsumo" placeholder="Ingrese consumo">
-    <button onclick="enviarConsumo()">Guardar</button>
+    <button id="authorize_button" onclick="handleAuthClick()">Authorize</button>
+    <button id="signout_button" onclick="handleSignoutClick()">Sign Out</button>
 
-    <h2>Historial de Consumo</h2>
-    <table border="1">
+    <table>
         <thead>
             <tr>
-                <th>Fecha</th>
+                <th>ID</th>
+                <th>ID Factura</th>
+                <th>Consumo Total</th>
                 <th>Consumo</th>
+                <th>Fecha</th>
             </tr>
         </thead>
-        <tbody id="tablaConsumo"></tbody>
+        <tbody id="consumoTableBody">
+            <!-- Aquí se insertarán los datos dinámicamente -->
+        </tbody>
     </table>
 
-    <script src="script.js"></script>
+    <button onclick="getTableConsumoDia()">Table</button>
+
+    <form id="consumoForm">
+        <input type="text" id="lastConsumoTotalTxt" placeholder="Ultimo Consumo Total Registrado" disabled> <br>
+        <input type="text" id="idTxt" placeholder="ID" disabled>
+        <input type="text" id="idFacturaTxt" placeholder="ID de la Factura" value="ACTUAL" disabled>
+        <input type="number" id="consumoTotalTxt" placeholder="Consumo Total" oninput="calcularConsumo()">
+        <input type="number" id="consumoTxt" placeholder="Consumo" disabled>
+        <input type="text" id="fechaTxt" placeholder="Fecha">
+        <button type="submit">Agregar Turno</button>
+    </form>
+
+
+    <script async defer id="gapiL" src="https://apis.google.com/js/api.js"></script>
+    <script async defer id="gisL" src="https://accounts.google.com/gsi/client"></script>
+    <script async defer src="./assets/js/auth.js"></script>
+    <script async defer src="./assets/js/sheets.js"></script>
 </body>
 </html>
