@@ -98,7 +98,7 @@ function calcularConsumo(id, consumoT, lastConsumoT) {
 async function guardarConsumo(nuevoConsumo) {
     try {
         const response = await gapi.client.sheets.spreadsheets.values.append({
-            spreadsheetId: '1KPFeMzb1MdnLSho3Au6UfnnnowEQ8KRu1lutw_tEscg',
+            spreadsheetId: ID_TABLE,
             range: 'Consumo_Diario!A:C',
             valueInputOption: 'USER_ENTERED',
             resource: {
@@ -178,7 +178,7 @@ async function modificarConsumo(consumo) {
     const row = parseInt(consumo.id) + 1;
 
     const response = await gapi.client.sheets.spreadsheets.values.update({
-        spreadsheetId: '1KPFeMzb1MdnLSho3Au6UfnnnowEQ8KRu1lutw_tEscg',
+        spreadsheetId: ID_TABLE,
         range: `Consumo_Diario!A${row}:E${row}`,
         values: [update],
         valueInputOption: 'USER_ENTERED',
