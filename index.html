@@ -1,64 +1,70 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro de Consumo</title>
+    <title>Dashboard</title>
+
+    <link rel="icon" href="./assets/img/icon.webp">
+
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="./assets/css/Auth.css">
+    <link rel="stylesheet" href="./assets/css/styles.css">
 </head>
-
 <body>
-    <p>Sheets API Quickstart</p>
+    <header class="header">
+        <div class="header__logo">
+            <i class='bx bxs-dashboard'></i>
+            <h2 class="header__ttl">Dashboard</h2>
+        </div>
 
-    <button id="authorize_button" onclick="handleAuthClick()">Authorize</button>
-    <button id="signout_button" onclick="handleSignoutClick()">Sign Out</button>
+        <div class="auth__btns">
+            <button class="btn__Auth" id="authorize_button" onclick="handleAuthClick()">Autorizar</button>
+            <button class="btn__Auth" id="signout_button" onclick="handleSignoutClick()" title="log out"><i class='bx bx-log-out-circle'></i></button>
+        </div>
+    </header>
 
-    <table border="1">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>ID Factura</th>
-                <th>Consumo Total</th>
-                <th>Consumo</th>
-                <th>Fecha</th>
-            </tr>
-        </thead>
-        <tbody id="consumoTableBody">
-            <!-- Aquí se insertarán los datos dinámicamente -->
-        </tbody>
-    </table>
+    <main id="mainContent" class="main">
+        <div class="main__auth">
+            <h1 id="iconAuth">🙈</h1>
+        </div>
+    </main>
 
-    <br>
-    <h1>AGREGAR CONSUMO</h1>
-    <br>
-
-    <form id="consumoForm">
-        <input type="text" id="lastConsumoTotalTxt" placeholder="Ultimo Consumo Total Registrado" disabled> <br>
-        <input type="text" id="idTxt" placeholder="ID" disabled>
-        <input type="number" id="consumoTotalTxt" placeholder="Consumo Total" oninput="calcularConsumo('consumoTxt', 'consumoTotalTxt', 'lastConsumoTotalTxt')">
-        <input type="number" id="consumoTxt" placeholder="Consumo" disabled>
-        <input type="text" id="fechaTxt" placeholder="Fecha">
-        <button type="submit">Agregar Consumo</button>
-    </form>
-
-    <br>
-    <h1>MODIFICAR</h1>
-    <br>
-
-    <form id="updConsumoForm">
-        <input type="text" id="lastConsumoTotalUpd" placeholder="Ultimo Consumo Total Registrado" disabled> <br>
-        <input type="number" id="idUpd" placeholder="ID" disabled>
-        <input type="number" id="consumoTotalUpd" placeholder="Consumo Total" oninput="calcularConsumo('consumoUpd', 'consumoTotalUpd', 'lastConsumoTotalUpd')">
-        <input type="number" id="consumoUpd" placeholder="Consumo" disabled>
-        <input type="text" id="fechaUpd" placeholder="Fecha">
-        <button type="submit">Modificar Consumo</button>
-    </form>
-
+    <footer id="footerContent" class="footer">
+    </footer>
 
     <script async defer id="gapiL" src="https://apis.google.com/js/api.js"></script>
     <script async defer id="gisL" src="https://accounts.google.com/gsi/client"></script>
-    <script async defer src="./assets/js/auth.js"></script>
-    <script async defer src="./assets/js/sheets.js"></script>
-    <script src="./assets/js/credenciales.js"></script>
+    <script async defer src="./assets/js/Sheets/auth.js"></script>
+    <script async defer src="./assets/js/Sheets/TableConsumoDia.js"></script>
+    <script async defer src="./assets/js/Sheets/TableBill.js"></script>
+    <script src="./assets/js/Sheets/credenciales.js"></script>
+
+    <script>
+        function traerHTML(url, btn) {
+            fetch(url)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('mainContent').innerHTML = data;
+                });
+
+            let btns = document.querySelectorAll('.footer__op');
+
+            btns.forEach(b => {
+                b.classList.remove('footer__op--active');
+            });
+
+            btn.classList.add('footer__op--active');
+
+            // Llamada de funciones de informacion
+            getTotalSpent();
+            getLastBill();
+            getAverageMonthlySpent();
+            getSpentSinceLastBill();
+            getRemainingToCompleteAverage();
+        }
+    </script>
 </body>
 </html>

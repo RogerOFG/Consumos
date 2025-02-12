@@ -21,8 +21,16 @@ let gisInited = false;
 document.getElementById('gapiL').addEventListener('load', gapiLoaded());
 document.getElementById('gisL').addEventListener('load', gisLoaded());
 
-document.getElementById('authorize_button').style.visibility = 'hidden';
-document.getElementById('signout_button').style.visibility = 'hidden';
+document.getElementById('authorize_button').style.display = 'none';
+document.getElementById('signout_button').style.display = 'none';
+
+function traerFooter() {
+    fetch('/Pages/footer.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('footerContent').innerHTML = data;
+        });
+}
 
 /**
  * Callback after api.js is loaded.
@@ -53,6 +61,7 @@ function gisLoaded() {
         scope: SCOPES,
         callback: '', // defined later
     });
+    
     gisInited = true;
     maybeEnableButtons();
 }
@@ -62,7 +71,7 @@ function gisLoaded() {
  */
 function maybeEnableButtons() {
     if (gapiInited && gisInited) {
-        document.getElementById('authorize_button').style.visibility = 'visible';
+        document.getElementById('authorize_button').style.display = 'block';
     }
 }
 
@@ -74,9 +83,11 @@ function handleAuthClick() {
         if (resp.error !== undefined) {
             throw (resp);
         }
-        document.getElementById('signout_button').style.visibility = 'visible';
+        document.getElementById('signout_button').style.display = 'block';
         document.getElementById('authorize_button').innerText = 'Refresh';
-        await getTableConsumoDia();
+        document.getElementById('iconAuth').innerHTML = "🙉";
+        traerFooter();
+        // await getTableConsumoDia();
     };
 
     if (gapi.client.getToken() === null) {
@@ -97,7 +108,9 @@ function handleSignoutClick() {
     if (token !== null) {
         google.accounts.oauth2.revoke(token.access_token);
         gapi.client.setToken('');
-        document.getElementById('authorize_button').innerText = 'Authorize';
-        document.getElementById('signout_button').style.visibility = 'hidden';
+        document.getElementById('authorize_button').innerText = 'Autorizar';
+        document.getElementById('signout_button').style.display = 'none';
+        document.getElementById('footerContent').innerHTML = "";
+        document.getElementById('iconAuth').innerHTML = "🙈";
     }
 }

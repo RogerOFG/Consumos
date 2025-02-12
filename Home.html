@@ -1,0 +1,110 @@
+<div class="stats">
+    <div class="box box--today">
+        <div class="box__top">
+            <div class="box__icon-content">
+                <i class='box__icon bx bxs-component'></i>
+            </div>
+
+            <h3 id="totalSpent" class="box__data"></h3>
+        </div>
+
+        <div class="box__bot">
+            <span class="box__ttl">Gasto total acumulado</span>
+        </div>
+    </div>
+
+    <div class="box">
+        <div class="box__top">
+            <div class="box__icon-content">
+                <i class='box__icon bx bx-history'></i>
+            </div>
+            
+            <h3 id="spentLastBill" class="box__data"></h3>
+        </div>
+
+        <div class="box__bot">
+            <span class="box__ttl">Gasto de la ultima factura</span>
+        </div>
+    </div>
+
+    <div class="box">
+        <div class="box__top">
+            <div class="box__icon-content">
+                <i class='box__icon bx bx-stats'></i>
+            </div>
+            
+            <h3 id="AverageMonthlySpent" class="box__data"></h3>
+        </div>
+
+        <div class="box__bot">
+            <span class="box__ttl">Promedio de gasto mensual</span>
+        </div>
+    </div>
+
+    <div class="box">
+        <div class="box__top">
+            <div class="box__icon-content">
+                <i class='box__icon bx bxs-star-half'></i>
+            </div>
+            
+            <h3 id="SpentSinceLastBill" class="box__data"></h3>
+        </div>
+
+        <div class="box__bot">
+            <span class="box__ttl">Gastos desde la última factura</span>
+        </div>
+    </div>
+
+    <div class="box">
+        <div class="box__top">
+            <div class="box__icon-content">
+                <i class='box__icon bx bxs-star'></i>
+            </div>
+
+            <h3 id="RemainingToAverage" class="box__data"></h3>
+        </div>
+
+        <div class="box__bot">
+            <span class="box__ttl">Restante para completar promedio</span>
+        </div>
+    </div>
+
+    <div class="box box--today">
+        <div class="box__top">
+            <div class="box__icon-content">
+                <i class='box__icon bx bx-objects-vertical-center'></i>
+            </div>
+            
+            <h3 class="box__data"><?php echo $promMesA; ?></h3>
+        </div>
+
+        <div class="box__bot">
+            <span class="box__ttl">Promedio x dias del mes actual</span>
+        </div>
+    </div>
+</div>
+
+<div class="overview">
+    <!-- DATOS DE LA GRAFICA -->
+    <div>
+        <?php
+            $res = graficaGastosFactura();
+            while($fact = mysqli_fetch_array($res)){
+        ?>
+            <!-- Gastos de los ultimos 6 meses -->
+            <input class="data-input" type="hidden" value="<?php echo $fact['gasto']; ?>">
+            <!-- Fechas de los ultimos 6 meses -->
+            <input class="date-input" type="hidden" value="<?php echo $fact['fecha']; ?>">
+        <?php
+            }
+        ?>
+    </div>
+
+    <h3 class="overview__ttl">Grafica de los ultimos 6 meses</h3>
+
+    <canvas id="myChart" width="400" height="300"></canvas>
+</div>
+
+<script>
+    getTotalSpent();
+</script>
