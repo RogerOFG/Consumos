@@ -25,7 +25,7 @@ document.getElementById('authorize_button').style.display = 'none';
 document.getElementById('signout_button').style.display = 'none';
 
 function traerFooter() {
-    fetch('/Pages/footer.html')
+    fetch('Pages/footer.html')
         .then(response => response.text())
         .then(data => {
             document.getElementById('footerContent').innerHTML = data;
