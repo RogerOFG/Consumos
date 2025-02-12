@@ -43,9 +43,7 @@ async function getLastBill() {
     // Guardamos y validamos antes de asignar el valor
     const label = document.getElementById('spentLastBill');
 
-    if(label) {
-        label.innerHTML = last.consumo;
-    }
+    if(label) label.innerHTML = last.consumo;
 }
 
 // Promedio de gasto mensual
@@ -67,9 +65,7 @@ async function getAverageMonthlySpent() {
     // Guardamos y validamos antes de asignar el valor
     const label = document.getElementById('AverageMonthlySpent');
 
-    if(label) {
-        label.innerHTML = total;
-    }
+    if(label) label.innerHTML = total;
 
     return total;
 }

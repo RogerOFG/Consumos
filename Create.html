@@ -1,3 +1,301 @@
+<!-- POPUS -->
 <div>
-    Hello World
+    <div id="popupGasto" class="popup">
+        <div class="popup__ttl">Registrar gastos del día</div>
+
+        <div class="popup__close" onclick="closeForms()">
+            <i class='popup__close-icon bx bx-x'></i>
+        </div>
+
+        <form action="./php/gastoxdia.php" method="POST" class="form">
+            <div class="form__element">
+                <input class="form__txt" name="gastoTxt" type="text" required>
+                <span class="form__lbl">Gasto del día</span>
+            </div>
+
+            <div class="form__element">
+                <input id="fechaActual" class="form__txt" name="fechaTxt" type="text" readonly>
+                <span class="form__lbl form__lbl--active">Fecha actual</span>
+            </div>
+
+            <div class="form__save">
+                <button type="submit" class="form__btn">Guardar</button>
+            </div>
+        </form>
+    </div>
+
+    <div id="popupFactura" class="popup">
+        <div class="popup__ttl">Registrar nueva factura</div>
+
+        <div class="popup__close" onclick="closeForms()">
+            <i class='popup__close-icon bx bx-x'></i>
+        </div>
+
+        <form action="./php/factura.php" method="POST" class="form">
+            <div class="form__element">
+                <input class="form__txt" name="gastoTxt" type="number" required>
+                <span class="form__lbl">Gasto del mes</span>
+            </div>
+
+            <div class="form__element">
+                <input onclick="chooseDate()" id="dateChoose" class="form__txt" name="fechaTxt" type="text" required>
+                <span class="form__lbl">Fecha</span>
+            </div>
+
+            <div class="form__save">
+                <button type="submit" class="form__btn">Guardar</button>
+            </div>
+        </form>
+    </div>
+
+    <div id="popupDate" class="popup">
+        <div class="popup__ttl">Escoger Fecha</div>
+
+        <div class="form">
+            <div id="formDateMonth" class="date">
+                <div class="date__content">
+                    <div class="date__element monthOP">Ene.</div>
+                    <div class="date__element monthOP">Feb.</div>
+                    <div class="date__element monthOP">Mar.</div>
+                    <div class="date__element monthOP">Abr.</div>
+                </div>
+
+                <div class="date__content">
+                    <div class="date__element monthOP">May.</div>
+                    <div class="date__element monthOP">Jun.</div>
+                    <div class="date__element monthOP">Jul.</div>
+                    <div class="date__element monthOP">Ago.</div>
+                </div>
+
+                <div class="date__content">
+                    <div class="date__element monthOP">Sep.</div>
+                    <div class="date__element monthOP">Oct.</div>
+                    <div class="date__element monthOP">Nov.</div>
+                    <div class="date__element monthOP">Dic.</div>
+                </div>
+            </div>
+
+            <div id="formDateDay" class="date hidde">
+                <div class="date__content">
+                    <div class="date__element dayOP">1</div>
+                    <div class="date__element dayOP">2</div>
+                    <div class="date__element dayOP">3</div>
+                    <div class="date__element dayOP">4</div>
+                    <div class="date__element dayOP">5</div>
+                </div>
+
+                <div class="date__content">
+                    <div class="date__element dayOP">6</div>
+                    <div class="date__element dayOP">7</div>
+                    <div class="date__element dayOP">8</div>
+                    <div class="date__element dayOP">9</div>
+                    <div class="date__element dayOP">10</div>
+                </div>
+
+                <div class="date__content">
+                    <div class="date__element dayOP">11</div>
+                    <div class="date__element dayOP">12</div>
+                    <div class="date__element dayOP">13</div>
+                    <div class="date__element dayOP">14</div>
+                    <div class="date__element dayOP">15</div>
+                </div>
+
+                <div class="date__content">
+                    <div class="date__element dayOP">16</div>
+                    <div class="date__element dayOP">17</div>
+                    <div class="date__element dayOP">18</div>
+                    <div class="date__element dayOP">19</div>
+                    <div class="date__element dayOP">20</div>
+                </div>
+
+                <div class="date__content">
+                    <div class="date__element dayOP">21</div>
+                    <div class="date__element dayOP">22</div>
+                    <div class="date__element dayOP">23</div>
+                    <div class="date__element dayOP">24</div>
+                    <div class="date__element dayOP">25</div>
+                </div>
+
+                <div class="date__content">
+                    <div class="date__element dayOP">26</div>
+                    <div class="date__element dayOP">27</div>
+                    <div class="date__element dayOP">28</div>
+                    <div class="date__element dayOP">29</div>
+                    <div class="date__element dayOP">30</div>
+                    <div class="date__element dayOP">31</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="popupUpdate" class="popup">
+        <div class="popup__ttl">Modificar gasto del día</div>
+
+        <div class="popup__close" onclick="closeForms()">
+            <i class='popup__close-icon bx bx-x'></i>
+        </div>
+
+        <form action="./php/update.php" method="POST" class="form">
+            <div class="form__element">
+                <input class="form__txt" name="gastoTxt" type="text" value="<?php echo $GastoA ?>" required>
+                <span class="form__lbl">Gasto del día</span>
+            </div>
+
+            <div class="form__element form__element--check">
+                <label class="checkbox-wrapper">
+                    <input type="checkbox" id="check1" class="checkbox" hidden="" data-target="fechaAct">
+                    <label for="check1" class="checkmark"></label>
+                </label>
+
+                <input id="fechaAct" class="form__txt fecha-input" type="text" readonly>
+                <span class="form__lbl form__lbl--active">Fecha actual</span>
+            </div>
+
+            <div class="form__element form__element--check">
+                <label class="checkbox-wrapper">
+                    <input type="checkbox" id="check2" class="checkbox" hidden="" data-target="fechaGuardada" checked>
+                    <label for="check2" class="checkmark"></label>
+                </label>
+
+                <input id="fechaGuardada" class="form__txt fecha-input" type="text"
+                    value="<?php echo $fechaUltGastoDia ?>" readonly>
+                <span class="form__lbl form__lbl--active">Fecha Guardada</span>
+            </div>
+
+            <input id="fechaTxt" name="fechaTxt" type="hidden">
+
+            <div class="form__save">
+                <button type="submit" class="form__btn">Guardar</button>
+            </div>
+        </form>
+    </div>
 </div>
+
+<div class="new">
+    <div class="new__content">
+        <?php
+            if ($cantidadRegistros == 0) {
+        ?> 
+                <button class="new__btn" onclick="popupGasto()">Registrar gastos del día</button>
+        <?php 
+            } else if ($cantidadRegistros == 1) {
+        ?>
+                <button class="new__btn" onclick="update()">Modificar gastos del día</button>
+        <?php
+            }
+        ?>
+
+        <button class="new__btn new__btn--clr" onclick="popupFactura()">Registrar gasto factura</button>
+    </div>
+</div>
+
+<div class="stats">
+    <div class="box box--today">
+        <?php
+        if ($cantidadRegistros == 0) {
+        ?> 
+            <div class="box__top">
+                <div class="box__icon-content">
+                    <i class='box__icon bx bxs-calendar-x'></i>
+                </div>
+
+                <h3 class="box__data">En espera</h3>
+            </div>
+
+            <div class="box__bot">
+                <span class="box__ttl">Aun no se han registrado gastos el dia de hoy</span>
+            </div>
+        <?php
+        } else if($cantidadRegistros == 1) {
+        ?> 
+            <div class="box__top">
+                <div class="box__icon-content">
+                    <i class='box__icon bx bxs-calendar-check'></i>
+                </div>
+                
+                <h3 class="box__data"><?php echo $gastoDia ?></h3>
+            </div>
+
+            <div class="box__bot">
+                <span class="box__ttl">Gasto del día registrado</span>
+            </div>
+        <?php
+        }
+        ?>
+    </div>
+
+    <div class="box">
+        <div class="box__top">
+            <div class="box__icon-content">
+                <i class='box__icon bx bxs-data'></i>
+            </div>
+            
+            <h3 class="box__data"><?php echo $amount ?></h3>
+        </div>
+
+        <div class="box__bot">
+            <span class="box__ttl">Cantidad de días registrados</span>
+        </div>
+    </div>
+
+    <div class="box">
+        <div class="box__top">
+            <div class="box__icon-content">
+                <i class='box__icon bx bx-stats'></i>
+            </div>
+            
+            <h3 class="box__data"><?php echo $diasTranscurridos ?></h3>
+        </div>
+
+        <div class="box__bot">
+            <span class="box__ttl">Cantidad de días transcurridos</span>
+        </div>
+    </div>
+</div>
+
+<div class="overview">
+    <!-- DATOS DE LA GRAFICA -->
+    <div>
+        <?php 
+            $res = graficaGastosXDia('ACTUAL');
+            while($fact = mysqli_fetch_array($res)){
+                $fecha_sin_hora = explode(' - ', $fact['fecha'])[0];
+        ?>
+            <!-- Gastos de los ultimos 6 meses -->
+            <input class="data-input" type="hidden" value="<?php echo $fact['gasto']; ?>">
+            <!-- Fechas de los ultimos 6 meses -->
+            <input class="date-input" type="hidden" value="<?php echo $fecha_sin_hora; ?>">
+        <?php
+            }
+        ?>
+    </div>
+
+    <h3 class="overview__ttl">Grafica de gastos despues de ultima fac.</h3>
+
+    <canvas id="myChart" width="400" height="300"></canvas>
+</div>
+
+<script>
+    const checkboxes = document.querySelectorAll('.checkbox');
+    const inputFecha = document.getElementById('fechaTxt');
+    const inputFechaG = document.getElementById('fechaGuardada').value;
+
+    inputFecha.value = inputFechaG;
+
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            checkboxes.forEach(otherCheckbox => {
+                if (otherCheckbox !== checkbox) {
+                    otherCheckbox.checked = false;
+                }
+            });
+
+            const associatedInputId = checkbox.getAttribute('data-target');
+            const associatedInput = document.getElementById(associatedInputId);
+
+            if (associatedInput) {
+                inputFecha.value = associatedInput.value;
+            }
+        });
+    });
+</script>

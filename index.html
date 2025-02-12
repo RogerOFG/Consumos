@@ -42,6 +42,9 @@
     <script async defer src="./assets/js/Sheets/TableBill.js"></script>
     <script src="./assets/js/Sheets/credenciales.js"></script>
 
+    <script src="./assets/js/main.js"></script>
+    <script src="./assets/js/graficaSola.js"></script>
+
     <script>
         function traerHTML(url, btn) {
             fetch(url)
@@ -64,6 +67,7 @@
             getAverageMonthlySpent();
             getSpentSinceLastBill();
             getRemainingToCompleteAverage();
+            getAverageSpentPerDay("ACTUAL");
         }
     </script>
 </body>

@@ -50,12 +50,10 @@ async function getTotalSpent() {
     // Redondeamos a un decimal
     totalSpent = totalSpent.toFixed(1);
 
-    if(label) {
-        label.innerHTML = totalSpent;
-    }
+    if(label) label.innerHTML = totalSpent;
 }
 
-// Gasto desde la última factura
+// Gasto desde la última factura (ACTUAL)
 async function getSpentSinceLastBill() {
     const table = await getTableDaySpent();
 
@@ -74,9 +72,7 @@ async function getSpentSinceLastBill() {
     // Guardamos y validamos antes de asignar el valor
     const label = document.getElementById('SpentSinceLastBill');
 
-    if(label) {
-        label.innerHTML = res;
-    }
+    if(label) label.innerHTML = res;
 
     return res;
 }
@@ -94,9 +90,59 @@ async function getRemainingToCompleteAverage() {
     // Guardamos y validamos antes de asignar el valor
     const label = document.getElementById('RemainingToAverage');
 
-    if(label) {
-        label.innerHTML = res;
-    }
+    if(label) label.innerHTML = res;
+}
 
-    console.log("Restante: ", res);
+// Funcion para convertir una cadena "dd/mm/yy - HH:MM" a una fecha
+function parseDate(dateStr){
+    const [date] = dateStr.split(" - ");
+    const [day, month, year] = date.split("/");
+
+    return new Date(
+        parseInt(year, 10),
+        parseInt(month, 10) - 1,
+        parseInt(day, 10),
+    );
+}
+
+// Dias transcurridos segun el campo id_factura
+async function getdaysElapsed(id_bill) {
+    let table = await getTableDaySpent();
+    let currentDate = new Date();
+
+    let filteredTable = table.filter(row => row.id_factura === id_bill);
+    let ct = filteredTable.length;
+
+    // Validamos la existencia de informacion en la tabla filtrada
+    if (ct === 0) return;
+
+    let firstDate = filteredTable[0].fecha;
+
+    const firstDateObject = parseDate(firstDate);
+    const lastDateObject = parseDate(filteredTable[ct - 1].fecha);
+
+    const endDateObject = (id_bill === "ACTUAL")
+        ? currentDate
+        : lastDateObject;
+
+    let daysPast = Math.floor((endDateObject - firstDateObject) / (1000 * 60 * 60 * 24));
+
+    return daysPast;
+}
+
+// Promedio de consumo entre dias transcurridos
+async function getAverageSpentPerDay(id_bill) {
+    let days = await getdaysElapsed(id_bill);
+    let spent = await getSpentSinceLastBill();
+
+    let res = parseFloat(spent) / parseFloat(days);
+
+    const label = document.getElementById('AverageSpentPerDay');
+
+    // Redondeamos a un decimal y retornamos
+    res = res.toFixed(1);
+
+    if (label) label.innerHTML = res;
+
+    return res;
 }
