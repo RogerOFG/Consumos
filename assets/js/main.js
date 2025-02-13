@@ -95,3 +95,27 @@ function updateDateChoose() {
         dateChoose.value = monthSelected + daySelected;
     }
 }
+
+// Modificar fecha de registro Actual
+const checkboxes = document.querySelectorAll('.checkbox');
+const inputFecha = document.getElementById('fechaTxt');
+const inputFechaG = document.getElementById('fechaGuardada').value;
+
+inputFecha.value = inputFechaG;
+
+checkboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', function() {
+        checkboxes.forEach(otherCheckbox => {
+            if (otherCheckbox !== checkbox) {
+                otherCheckbox.checked = false;
+            }
+        });
+
+        const associatedInputId = checkbox.getAttribute('data-target');
+        const associatedInput = document.getElementById(associatedInputId);
+
+        if (associatedInput) {
+            inputFecha.value = associatedInput.value;
+        }
+    });
+});

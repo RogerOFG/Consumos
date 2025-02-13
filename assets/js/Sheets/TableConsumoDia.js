@@ -162,13 +162,21 @@ async function validateRecordOfTheDay() {
     const btnReg = document.getElementById('btnRegister');
     const btnUpd = document.getElementById('btnUpdate');
 
+    const boxW = document.getElementById('boxWaitingSpent');
+    const boxS = document.getElementById('boxSpent');
+    const message = document.getElementById('boxMessage');
+
     if (!btnReg && !btnUpd) return;
 
-    if (daysPast === 0) {
-        btnReg.classList.add('hidde');
-        btnUpd.classList.remove('hidde');
-    }else{
-        btnReg.classList.remove('hidde');
-        btnUpd.classList.add('hidde');
-    }
+    const isToday = daysPast === 0;
+
+    btnReg.classList.toggle('hidde', isToday);      // Si es hoy, se oculta btnReg
+    btnUpd.classList.toggle('hidde', !isToday);      // Si es hoy, se muestra btnUpd
+
+    boxW.classList.toggle('hidde', isToday);         // Si es hoy, se oculta boxW
+    boxS.classList.toggle('hidde', !isToday);         // Si es hoy, se muestra boxS
+
+    message.innerHTML = isToday
+        ? "Gasto del día registrado"
+        : "Aun no se han registrado gastos el día de hoy";
 }
