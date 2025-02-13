@@ -86,25 +86,14 @@
 
 <div class="overview">
     <!-- DATOS DE LA GRAFICA -->
-    <div>
-        <?php
-            $res = graficaGastosFactura();
-            while($fact = mysqli_fetch_array($res)){
-        ?>
-            <!-- Gastos de los ultimos 6 meses -->
-            <input class="data-input" type="hidden" value="<?php echo $fact['gasto']; ?>">
-            <!-- Fechas de los ultimos 6 meses -->
-            <input class="date-input" type="hidden" value="<?php echo $fact['fecha']; ?>">
-        <?php
-            }
-        ?>
+    <div id="dataGrafic">
+        <!-- Gastos de los ultimos 6 meses -->
+        <!-- <input class="data-input" type="hidden" value="12"> -->
+        <!-- Fechas de los ultimos 6 meses -->
+        <!-- <input class="date-input" type="hidden" value="Abril"> -->
     </div>
 
     <h3 class="overview__ttl">Grafica de los ultimos 6 meses</h3>
 
     <canvas id="myChart" width="400" height="300"></canvas>
 </div>
-
-<script>
-    getTotalSpent();
-</script>

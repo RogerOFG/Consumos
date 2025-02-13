@@ -21,6 +21,7 @@ let gisInited = false;
 document.getElementById('gapiL').addEventListener('load', gapiLoaded());
 document.getElementById('gisL').addEventListener('load', gisLoaded());
 
+document.getElementById('refreshBtn').style.display = 'none';
 document.getElementById('authorize_button').style.display = 'none';
 document.getElementById('signout_button').style.display = 'none';
 
@@ -84,7 +85,8 @@ function handleAuthClick() {
             throw (resp);
         }
         document.getElementById('signout_button').style.display = 'block';
-        document.getElementById('authorize_button').innerText = 'Refresh';
+        document.getElementById('authorize_button').style.display = 'none';
+        document.getElementById('refreshBtn').style.display = 'block';
         document.getElementById('iconAuth').innerHTML = "🙉";
         traerFooter();
         // await getTableConsumoDia();
@@ -108,9 +110,23 @@ function handleSignoutClick() {
     if (token !== null) {
         google.accounts.oauth2.revoke(token.access_token);
         gapi.client.setToken('');
-        document.getElementById('authorize_button').innerText = 'Autorizar';
+        document.getElementById('authorize_button').style.display = 'block';
         document.getElementById('signout_button').style.display = 'none';
+        document.getElementById('refreshBtn').style.display = 'none';
         document.getElementById('footerContent').innerHTML = "";
         document.getElementById('iconAuth').innerHTML = "🙈";
     }
+}
+
+/**
+ *  Funcion para refrescar la pagina con la informacion nueva
+ */
+function handleRefreshPage() {
+    getTotalSpent();
+    getLastBill();
+    getAverageMonthlySpent();
+    getSpentSinceLastBill();
+    getRemainingToCompleteAverage();
+    getAverageSpentPerDay("ACTUAL");
+    validateRecordOfTheDay();
 }

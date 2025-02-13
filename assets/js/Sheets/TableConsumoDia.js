@@ -146,3 +146,29 @@ async function getAverageSpentPerDay(id_bill) {
 
     return res;
 }
+
+// Funcion para validar si ya se registro el consumo del dia
+async function validateRecordOfTheDay() {
+    const table = await getTableDaySpent();
+    let currentDate = new Date();
+    currentDate.setHours(0, 0, 0, 0);
+
+    const lastSpentDate = table[table.length - 1].fecha;
+
+    var dateObject = parseDate(lastSpentDate);
+
+    let daysPast = Math.floor((currentDate - dateObject) / (1000 * 60 * 60 * 24));
+
+    const btnReg = document.getElementById('btnRegister');
+    const btnUpd = document.getElementById('btnUpdate');
+
+    if (!btnReg && !btnUpd) return;
+
+    if (daysPast === 0) {
+        btnReg.classList.add('hidde');
+        btnUpd.classList.remove('hidde');
+    }else{
+        btnReg.classList.remove('hidde');
+        btnUpd.classList.add('hidde');
+    }
+}

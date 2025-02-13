@@ -69,3 +69,38 @@ async function getAverageMonthlySpent() {
 
     return total;
 }
+
+// Creacion de elementos HTML
+function createElementsHTML(value, className, father) {
+    var newInput = document.createElement("input");
+    newInput.type = "hidden";
+    newInput.value = value;
+    newInput.className = className;
+
+    document.getElementById(father).appendChild(newInput);
+}
+
+// Funcion para modificar una fecha con formato: "12 Febrero 25" 
+function formatDate(dateStr){
+    const [date] = dateStr.split(" - ");
+    const [day, month, year] = date.split("/");
+    const monthAbbr = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
+    const formattedYear = year.slice(-2);
+
+    return `${day} ${monthAbbr[parseInt(month, 10) - 1]} ${formattedYear}`;
+}
+
+// Imprimir las facturas de los ultimos 6 meses
+async function getBillsFromLast6Months() {
+    const table = await getTableBill();
+    let ct = table.length;
+
+    const bills = ct > 6 ? table.slice(ct - 6) : table;
+
+    bills.forEach(bill => {
+        const newDateFormat = formatDate(bill.fecha);
+
+        createElementsHTML(bill.consumo, "data-input", "dataGrafic");
+        createElementsHTML(newDateFormat, "date-input", "dataGrafic");
+    });
+}

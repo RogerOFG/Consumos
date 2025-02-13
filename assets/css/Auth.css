@@ -14,7 +14,7 @@
     cursor: pointer;
 }
 
-.btn__Auth:last-child{
+.btn__Auth.btn__Auth--icon{
     font-size: 24px;
     color: #1455b6;
     border: none;

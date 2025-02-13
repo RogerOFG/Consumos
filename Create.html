@@ -173,18 +173,8 @@
 
 <div class="new">
     <div class="new__content">
-        <?php
-            if ($cantidadRegistros == 0) {
-        ?> 
-                <button class="new__btn" onclick="popupGasto()">Registrar gastos del día</button>
-        <?php 
-            } else if ($cantidadRegistros == 1) {
-        ?>
-                <button class="new__btn" onclick="update()">Modificar gastos del día</button>
-        <?php
-            }
-        ?>
-
+        <button id="btnRegister" class="new__btn" onclick="popupGasto()">Registrar gastos del día</button>
+        <button id="btnUpdate" class="new__btn hidde" onclick="update()">Modificar gastos del día</button>
         <button class="new__btn new__btn--clr" onclick="popupFactura()">Registrar gasto factura</button>
     </div>
 </div>

@@ -10,6 +10,7 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <link rel="stylesheet" href="./assets/css/Auth.css">
     <link rel="stylesheet" href="./assets/css/styles.css">
 </head>
@@ -21,8 +22,9 @@
         </div>
 
         <div class="auth__btns">
+            <button class="btn__Auth btn__Auth--icon" id="refreshBtn" onclick="handleRefreshPage()" title="Refresh"><i class='bx bx-refresh'></i></button>
             <button class="btn__Auth" id="authorize_button" onclick="handleAuthClick()">Autorizar</button>
-            <button class="btn__Auth" id="signout_button" onclick="handleSignoutClick()" title="log out"><i class='bx bx-log-out-circle'></i></button>
+            <button class="btn__Auth btn__Auth--icon" id="signout_button" onclick="handleSignoutClick()" title="log out"><i class='bx bx-log-out-circle'></i></button>
         </div>
     </header>
 
@@ -42,11 +44,26 @@
     <script async defer src="./assets/js/Sheets/TableBill.js"></script>
     <script src="./assets/js/Sheets/credenciales.js"></script>
 
-    <script src="./assets/js/main.js"></script>
-    <script src="./assets/js/graficaSola.js"></script>
-
     <script>
-        function traerHTML(url, btn) {
+        // Función auxiliar para remover y cargar scripts dinámicos
+        function loadDynamicScripts(scriptsArray) {
+            // Remover todos los scripts que hayamos cargado dinámicamente
+            document.querySelectorAll("script[data-dynamic='true']").forEach(script => script.remove());
+
+            // Crear y agregar cada script al final del body
+            scriptsArray.forEach(src => {
+                let script = document.createElement("script");
+                script.src = src;
+                script.async = true;
+                script.setAttribute("data-dynamic", "true");
+                
+                // Aca genero los script
+                document.body.appendChild(script);
+            });
+        }
+
+        // Funcion para llamar a un archivo HTML
+        async function traerHTML(url, btn) {
             fetch(url)
                 .then(response => response.text())
                 .then(data => {
@@ -61,13 +78,30 @@
 
             btn.classList.add('footer__op--active');
 
-            // Llamada de funciones de informacion
-            getTotalSpent();
-            getLastBill();
-            getAverageMonthlySpent();
-            getSpentSinceLastBill();
-            getRemainingToCompleteAverage();
-            getAverageSpentPerDay("ACTUAL");
+            // Cargamos los Scripts especificos para cada pagina llamada
+            if (url === "./Home.html") {
+                await getBillsFromLast6Months();
+                getTotalSpent();
+
+                loadDynamicScripts([
+                    "./assets/js/graficaSola.js"
+                ]);
+            }else if (url === "./Create.html") {
+                validateRecordOfTheDay();
+
+                loadDynamicScripts([
+                    "./assets/js/main.js",
+                    "./assets/js/graficaSola.js"
+                ]);
+            }else if (url === "./History.html") {
+                loadDynamicScripts([
+                    "./assets/js/main.js",
+                    "./assets/js/grafico.js"
+                ]);
+            }
+
+            // Refrescar la informacion
+            handleRefreshPage();
         }
     </script>
 </body>
