@@ -20,7 +20,7 @@ async function getTableBill() {
     }
 
     consumo = table.values
-        .filter(row => 
+        .filter(row =>
             row[0] && row[1] && row[2]
         )
         .map(row => ({
@@ -29,12 +29,14 @@ async function getTableBill() {
             fecha: row[2]
         }));
 
+    localStorage.setItem("Factura", JSON.stringify(consumo));
+
     return consumo;
 }
 
 // Gasto de la última factura
 async function getLastBill() {
-    const table = await getTableBill();
+    const table = JSON.parse(localStorage.getItem("Factura"));
 
     last = table[table.length - 1];
 
@@ -48,7 +50,7 @@ async function getLastBill() {
 
 // Promedio de gasto mensual
 async function getAverageMonthlySpent() {
-    const table = await getTableBill();
+    const table = JSON.parse(localStorage.getItem("Factura"));
 
     let ct = table.length;
     let total = 0;
@@ -92,7 +94,7 @@ function formatDate(dateStr){
 
 // Imprimir las facturas de los ultimos 6 meses
 async function getBillsFromLast6Months() {
-    const table = await getTableBill();
+    const table = JSON.parse(localStorage.getItem("Factura"));
     let ct = table.length;
 
     const bills = ct > 6 ? table.slice(ct - 6) : table;

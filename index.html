@@ -13,6 +13,9 @@
 
     <link rel="stylesheet" href="./assets/css/Auth.css">
     <link rel="stylesheet" href="./assets/css/styles.css">
+
+    <script type="module" src="./assets/js/Firebase/frebaseconect.js"></script>
+    <script type="module" src="./assets/js/Firebase/auth.js"></script>
 </head>
 <body>
     <header class="header">
@@ -22,9 +25,8 @@
         </div>
 
         <div class="auth__btns">
-            <button class="btn__Auth btn__Auth--icon" id="refreshBtn" onclick="handleRefreshPage()" title="Refresh"><i class='bx bx-refresh'></i></button>
-            <button class="btn__Auth" id="authorize_button" onclick="handleAuthClick()">Autorizar</button>
-            <button class="btn__Auth btn__Auth--icon" id="signout_button" onclick="handleSignoutClick()" title="log out"><i class='bx bx-log-out-circle'></i></button>
+            <button class="btn__Auth" id="loginBtn" type="button">Autorizar</button>
+            <button class="btn__Auth btn__Auth--icon hidde" id="logoutBtn" title="log out" type="button"><i class='bx bx-log-out-circle'></i></button>
         </div>
     </header>
 
@@ -34,75 +36,28 @@
         </div>
     </main>
 
-    <footer id="footerContent" class="footer">
+    <footer id="Footer" class="footer hidde">
+        <div class="footer__content">
+            <a href="./Home.html" class="footer__op">
+                <i class='footer__icon bx bx-stats'></i>
+        
+                <span class="footer__sub">Estadisticas</span>
+            </a>
+        
+            <a href="./Create.html" class="footer__op">
+                <i class='footer__icon bx bx-plus-circle'></i>
+        
+                <span class="footer__sub">Nuevo</span>
+            </a>
+        
+            <a href="./History.html" class="footer__op">
+                <i class='footer__icon bx bx-history'></i>
+        
+                <span class="footer__sub">Historico</span>
+            </a>
+        </div>
     </footer>
 
-    <script async defer id="gapiL" src="https://apis.google.com/js/api.js"></script>
-    <script async defer id="gisL" src="https://accounts.google.com/gsi/client"></script>
-    <script async defer src="./assets/js/Sheets/auth.js"></script>
-    <script async defer src="./assets/js/Sheets/TableConsumoDia.js"></script>
-    <script async defer src="./assets/js/Sheets/TableBill.js"></script>
-    <script src="./assets/js/Sheets/credenciales.js"></script>
-
-    <script>
-        // Función auxiliar para remover y cargar scripts dinámicos
-        function loadDynamicScripts(scriptsArray) {
-            // Remover todos los scripts que hayamos cargado dinámicamente
-            document.querySelectorAll("script[data-dynamic='true']").forEach(script => script.remove());
-
-            // Crear y agregar cada script al final del body
-            scriptsArray.forEach(src => {
-                let script = document.createElement("script");
-                script.src = src;
-                script.async = true;
-                script.setAttribute("data-dynamic", "true");
-                
-                // Aca genero los script
-                document.body.appendChild(script);
-            });
-        }
-
-        // Funcion para llamar a un archivo HTML
-        async function traerHTML(url, btn) {
-            fetch(url)
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('mainContent').innerHTML = data;
-                });
-
-            let btns = document.querySelectorAll('.footer__op');
-
-            btns.forEach(b => {
-                b.classList.remove('footer__op--active');
-            });
-
-            btn.classList.add('footer__op--active');
-
-            // Cargamos los Scripts especificos para cada pagina llamada
-            if (url === "./Home.html") {
-                await getBillsFromLast6Months();
-                getTotalSpent();
-
-                loadDynamicScripts([
-                    "./assets/js/graficaSola.js"
-                ]);
-            }else if (url === "./Create.html") {
-                validateRecordOfTheDay();
-
-                loadDynamicScripts([
-                    "./assets/js/main.js",
-                    "./assets/js/graficaSola.js"
-                ]);
-            }else if (url === "./History.html") {
-                loadDynamicScripts([
-                    "./assets/js/main.js",
-                    "./assets/js/grafico.js"
-                ]);
-            }
-
-            // Refrescar la informacion
-            handleRefreshPage();
-        }
-    </script>
+    <script src="./assets/js/Firebase/ArrayTables.js"></script>
 </body>
 </html>

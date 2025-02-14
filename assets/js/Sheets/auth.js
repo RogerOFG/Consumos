@@ -89,7 +89,16 @@ function handleAuthClick() {
         document.getElementById('refreshBtn').style.display = 'block';
         document.getElementById('iconAuth').innerHTML = "🙉";
         traerFooter();
-        // await getTableConsumoDia();
+        // getTableBill();
+        // getTableConsumoDia();
+        
+        (async () => {
+            await getTableBill();
+            await getTableDaySpent();
+            console.log("OP 1: ", JSON.parse(localStorage.getItem("Consumo_Diario")));
+            console.log("OP 2: ", JSON.parse(localStorage.getItem("Factura")));
+        })();
+        
     };
 
     if (gapi.client.getToken() === null) {
@@ -101,6 +110,8 @@ function handleAuthClick() {
         tokenClient.requestAccessToken({ prompt: '' });
     }
 }
+
+// localStorage.clear();
 
 /**
  *  Sign out the user upon button click.
@@ -114,7 +125,12 @@ function handleSignoutClick() {
         document.getElementById('signout_button').style.display = 'none';
         document.getElementById('refreshBtn').style.display = 'none';
         document.getElementById('footerContent').innerHTML = "";
-        document.getElementById('iconAuth').innerHTML = "🙈";
+
+        document.getElementById('mainContent').innerHTML = `
+            <div class="main__auth">
+                <h1 id="iconAuth">🙈</h1>
+            </div>
+        `;
     }
 }
 

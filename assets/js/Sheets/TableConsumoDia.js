@@ -31,12 +31,14 @@ async function getTableDaySpent() {
             fecha: row[4]
         }));
 
+    localStorage.setItem("Consumo_Diario", JSON.stringify(consumo));
+
     return consumo;
 }
 
 // Gasto total
 async function getTotalSpent() {
-    const table = await getTableDaySpent();
+    const table = JSON.parse(localStorage.getItem("Consumo_Diario"));
 
     last = table[table.length - 1];
 
@@ -55,7 +57,7 @@ async function getTotalSpent() {
 
 // Gasto desde la última factura (ACTUAL)
 async function getSpentSinceLastBill() {
-    const table = await getTableDaySpent();
+    const table = JSON.parse(localStorage.getItem("Consumo_Diario"));
 
     let ct = table.length;
     let res = 0;
@@ -107,7 +109,7 @@ function parseDate(dateStr){
 
 // Dias transcurridos segun el campo id_factura
 async function getdaysElapsed(id_bill) {
-    let table = await getTableDaySpent();
+    let table = localStorage.getItem(1);
     let currentDate = new Date();
 
     let filteredTable = table.filter(row => row.id_factura === id_bill);
@@ -149,7 +151,7 @@ async function getAverageSpentPerDay(id_bill) {
 
 // Funcion para validar si ya se registro el consumo del dia
 async function validateRecordOfTheDay() {
-    const table = await getTableDaySpent();
+    const table = JSON.parse(localStorage.getItem("Consumo_Diario"));
     let currentDate = new Date();
     currentDate.setHours(0, 0, 0, 0);
 

@@ -11,59 +11,19 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="./assets/css/styles.css">
+    
+    <script type="module" src="./assets/js/frebaseconect.js"></script>
+    <script type="module" src="./assets/js/form.js"></script>
 </head>
 <body>
-    <p>Sheets API Quickstart</p>
+    <form id="formulario" action="">
+        <div class="inputFormulario">
+            <input id="firma" type="text" name="firma" required>
+        </div>
 
-    <button id="authorize_button" onclick="handleAuthClick()">Authorize</button>
-    <button id="signout_button" onclick="handleSignoutClick()">Sign Out</button>
-
-    <table border="1">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>ID Factura</th>
-                <th>Consumo Total</th>
-                <th>Consumo</th>
-                <th>Fecha</th>
-            </tr>
-        </thead>
-        <tbody id="consumoTableBody">
-            <!-- Aquí se insertarán los datos dinámicamente -->
-        </tbody>
-    </table>
-
-    <br>
-    <h1 class="text-2xl">AGREGAR CONSUMO</h1>
-    <br>
-
-    <form id="consumoForm">
-        <input type="text" id="lastConsumoTotalTxt" placeholder="Ultimo Consumo Total Registrado" disabled> <br>
-        <input type="text" id="idTxt" placeholder="ID" disabled>
-        <input type="number" id="consumoTotalTxt" placeholder="Consumo Total" oninput="calcularConsumo('consumoTxt', 'consumoTotalTxt', 'lastConsumoTotalTxt')">
-        <input type="number" id="consumoTxt" placeholder="Consumo" disabled>
-        <input type="text" id="fechaTxt" placeholder="Fecha">
-        <button type="submit">Agregar Consumo</button>
+        <button type="submit">Guardar</button>
     </form>
 
-    <br>
-    <h1>MODIFICAR</h1>
-    <br>
-
-    <form id="updConsumoForm">
-        <input type="text" id="lastConsumoTotalUpd" placeholder="Ultimo Consumo Total Registrado" disabled> <br>
-        <input type="number" id="idUpd" placeholder="ID" disabled>
-        <input type="number" id="consumoTotalUpd" placeholder="Consumo Total" oninput="calcularConsumo('consumoUpd', 'consumoTotalUpd', 'lastConsumoTotalUpd')">
-        <input type="number" id="consumoUpd" placeholder="Consumo" disabled>
-        <input type="text" id="fechaUpd" placeholder="Fecha">
-        <button type="submit">Modificar Consumo</button>
-    </form>
-
-
-    <script async defer id="gapiL" src="https://apis.google.com/js/api.js"></script>
-    <script async defer id="gisL" src="https://accounts.google.com/gsi/client"></script>
-    <script async defer src="./assets/js/auth.js"></script>
-    <script async defer src="./assets/js/sheets.js"></script>
-    <script src="./assets/js/credenciales.js"></script>
+    <div id="listDiv"></div>
 </body>
 </html>
